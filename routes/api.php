@@ -15,11 +15,9 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-
-
 Route::name('user.')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function(){
-        Route::get('/user',[UserController::class,'showUserInfo'])->name('info');
+        Route::post('/user/info',[UserController::class,'showUserInfo'])->name('info');
         Route::post('/auth/logout', [UserController::class, 'logoutUser'])->name('logout');
     });
     

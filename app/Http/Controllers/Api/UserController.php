@@ -14,9 +14,75 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function createUser(UserRegisterRequest $request)
+    /**
+     * Register User
+     * 
+     * @OA\Post(
+     *      path="/api/auth/register",
+     *      tags={"Auth"},
+     *      @OA\Parameter(
+     *          name="email",
+     *          description="Email",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="password",
+     *          description="Password",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string",
+     *              format="password"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="name",
+     *          description="Name",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Bad credentials",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error",
+     *          @OA\JsonContent()
+     *      )
+     * )
+     * @param Request $request
+     */
+    public function createUser(Request $request)
     {
-        $request->validated();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Cant create account',
+                'data' => [
+                    'error' => $validator->errors(),
+                ]
+            ], 422);
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -31,15 +97,74 @@ class UserController extends Controller
             ]
         ], 200);
     }
-
-    public function loginUser(UserLoginRequest $request)
+    /**
+     * Login User
+     * 
+     * @OA\Post(
+     *      path="/api/auth/login",
+     *      tags={"Auth"},
+     *      @OA\Parameter(
+     *          name="email",
+     *          description="Email",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="password",
+     *          description="Password",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string",
+     *              format="password"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Login successfully"
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Wrong credentials",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Bad credentials",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error",
+     *          @OA\JsonContent()
+     *      )
+     * )
+     * @param Request $request
+     */
+    public function loginUser(Request $request)
     {
-        $request->validated();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Bad credentials',
+                'data' => [
+                    'error' => $validator->errors(),
+                ]
+            ], 422);
+        }
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
-            throw ValidationException::withMessages([
-                'message' => ['The provided credentials are incorrect.'],
-            ]);
+            return response()->json([
+                'message' => 'Email or password is incorrect',
+                'data' => []
+            ], 401);
         }
 
         $user = User::where('email', $request->email)->first();
@@ -61,7 +186,34 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function showUserInfo(Request $request){
+
+    /**
+     * Get user information
+     * 
+     * @OA\Post(
+     *      path="/api/user/info",
+     *      tags={"User"},
+     *      security={{"sanctum":{}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error",
+     *          @OA\JsonContent()
+     *      )
+     * )
+     * @param Request $request
+     */
+    public function showUserInfo(Request $request)
+    {
         return $request->user();
     }
 }

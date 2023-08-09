@@ -46,4 +46,20 @@ class UserController extends Controller
             'token' => $user->createToken("API TOKEN")->plainTextToken
         ], 200);
     }
+
+    public function logoutUser(Request $request)
+    {
+        try{
+            $request->user()->currentAccessToken()->delete();
+        }catch(\Exception $e){
+            return response()->json([
+                'message' => 'Unable to logout',
+                'error' => $e->getMessage()
+            ], 200);       
+        }
+
+        return response()->json([
+            'message' => 'User logged out successfully',
+        ], 200);        
+    }
 }

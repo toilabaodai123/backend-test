@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -25,7 +26,9 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User Created Successfully',
-            'token' => $user->createToken("API TOKEN")->plainTextToken
+            'data' => [
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ]
         ], 200);
     }
 
@@ -34,32 +37,31 @@ class UserController extends Controller
         $request->validated();
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json([
-                'message' => 'Email & Password does not match with our record.',
-            ], 401);
+            throw ValidationException::withMessages([
+                'message' => ['The provided credentials are incorrect.'],
+            ]);
         }
 
         $user = User::where('email', $request->email)->first();
 
         return response()->json([
             'message' => 'User Logged In Successfully',
-            'token' => $user->createToken("API TOKEN")->plainTextToken
+            'data' => [
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ]
         ], 200);
     }
 
     public function logoutUser(Request $request)
     {
-        try{
-            $request->user()->currentAccessToken()->delete();
-        }catch(\Exception $e){
-            return response()->json([
-                'message' => 'Unable to logout',
-                'error' => $e->getMessage()
-            ], 200);       
-        }
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'User logged out successfully',
-        ], 200);        
+        ], 200);
+    }
+
+    public function showUserInfo(Request $request){
+        return $request->user();
     }
 }

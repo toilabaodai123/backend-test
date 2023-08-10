@@ -3,13 +3,12 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserTest extends TestCase
 {
-
     //use RefreshDatabase;
 
     public function test_get_user_info()
@@ -30,20 +29,24 @@ class UserTest extends TestCase
 
     public function test_user_register_and_login()
     {
-        $faker = \Faker\Factory::create();
+        $user = User::factory()->make();
 
         $registerParams = [
-            'name' => $faker->name,
-            'email' => $faker->email,
+            'name' => $user->name,
+            'email' => $user->email,
             'password' => 'password'
         ];
 
         $response = $this->postJson(route('auth.register'),$registerParams);
 
+        $this->assertDatabaseHas('users', [
+            'email' => $user->email
+        ]);
+
         $response->assertStatus(200);
 
         $loginPamrams = [
-            'email' => $registerParams['email'],
+            'email' => $user->email,
             'password' => 'password'
         ];
 

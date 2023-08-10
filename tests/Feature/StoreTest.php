@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Store;
 
 class StoreTest extends TestCase
 {
+    //use RefreshDatabase;
 
     public function test_get_all_stores(): void
     {
@@ -42,6 +42,14 @@ class StoreTest extends TestCase
 
         $response = $this->actingAs($user)->postJson(route('store.add'),$storeParams);
 
+        $this->assertDatabaseHas('stores', [
+            'name' => $store->name,
+            'address' => $store->address,
+            'description' => $store->description,
+            'is_online' => $store->is_online,
+            'user_id' => $store->user_id
+        ]);
+
         $response->assertStatus(200);
     }    
 
@@ -61,6 +69,13 @@ class StoreTest extends TestCase
         ];
 
         $response = $this->actingAs($user)->putJson(route('store.update',['id' => $store->id]),$storeParams);
+
+        $this->assertDatabaseHas('stores', [
+            'name' => 'new name',
+            'address' => 'new address',
+            'description' => 'new description',
+            'is_online' => "false"
+        ]);
 
         $response->assertStatus(200);
     }  

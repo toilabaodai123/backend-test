@@ -207,6 +207,56 @@
                 ],
                 "summary": "Get all stores of current user",
                 "operationId": "69ab226e7ad5bc26e6f79dc000c98f81",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Description",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Address",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_online",
+                        "in": "query",
+                        "description": "Is the store online?",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -268,8 +318,7 @@
                         "in": "query",
                         "description": "Description",
                         "schema": {
-                            "type": "string",
-                            "format": "password"
+                            "type": "string"
                         }
                     },
                     {
@@ -287,7 +336,7 @@
                         "description": "Is the store online?",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "boolean"
                         }
                     }
                 ],

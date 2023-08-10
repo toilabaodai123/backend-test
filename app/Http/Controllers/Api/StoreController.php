@@ -17,6 +17,54 @@ class StoreController extends Controller
      *      path="/api/store",
      *      tags={"Store"},
      *      security={{"sanctum":{}}},
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="name",
+     *          description="name",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ), 
+     *      @OA\Parameter(
+     *          name="description",
+     *          description="Description",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="address",
+     *          description="Address",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="is_online",
+     *          description="Is the store online?",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="boolean"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -39,10 +87,32 @@ class StoreController extends Controller
     {
         $user = $request->user();
 
+        $limitOfPagination = !empty($request->limit) ? $request->limit : 10;
+        
+        $stores = Store::where('user_id', $user->id);
+
+        if(!empty($request->name)){
+            $stores->where('name','like','%'.$request->name.'%');
+        }
+
+        if(!empty($request->description)){
+            $stores->where('description','like','%'.$request->description.'%');
+        }
+
+        if(!empty($request->address)){
+            $stores->where('address','like','%'.$request->address.'%');
+        }
+
+        if(!empty($request->is_online)){
+            $stores->where('is_online',$request->is_online == "true" ? 1 : 0);
+        }  
+
+        $stores = $stores->paginate($limitOfPagination);
+
         return response()->json([
             'message' => "",
             'data' => [
-                'data' => Store::where('user_id', $user->id)->get(),
+                'data' => $stores
             ]
         ], 200);
     }
@@ -75,8 +145,7 @@ class StoreController extends Controller
      *          description="Description",
      *          in="query",
      *          @OA\Schema(
-     *              type="string",
-     *              format="password"
+     *              type="string"
      *          )
      *      ),
      *      @OA\Parameter(
@@ -94,7 +163,7 @@ class StoreController extends Controller
      *          required=true,
      *          in="query",
      *          @OA\Schema(
-     *              type="string"
+     *              type="boolean"
      *          )
      *      ),
      *      @OA\Response(

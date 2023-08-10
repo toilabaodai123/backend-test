@@ -19,5 +19,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=&sK@rI018r37
       - MYSQL_DATABASE=backend
+      - MYSQL_DATABASE=backend_testing
     volumes:
       - ./docker/database:/var/lib/mysql

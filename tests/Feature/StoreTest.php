@@ -31,7 +31,7 @@ class StoreTest extends TestCase
         $store = Store::factory()->make([
             'user_id' => $user->id,
         ]);
-        
+
         $storeParams = [
             'name' => $store->name,
             'address' => $store->address,
@@ -40,7 +40,9 @@ class StoreTest extends TestCase
             'user_id' => $store->user_id
         ];
 
-        $response = $this->actingAs($user)->postJson(route('store.add'),$storeParams);
+        $response = $this->actingAs($user)->postJson(route('store.add'), $storeParams);
+
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('stores', [
             'name' => $store->name,
@@ -49,9 +51,7 @@ class StoreTest extends TestCase
             'is_online' => $store->is_online,
             'user_id' => $store->user_id
         ]);
-
-        $response->assertStatus(200);
-    }    
+    }
 
     public function test_update_store(): void
     {
@@ -60,7 +60,7 @@ class StoreTest extends TestCase
         $store = Store::factory()->create([
             'user_id' => $user->id,
         ]);
-        
+
         $storeParams = [
             'name' => 'new name',
             'address' => 'new address',
@@ -68,7 +68,9 @@ class StoreTest extends TestCase
             'is_online' => "false"
         ];
 
-        $response = $this->actingAs($user)->putJson(route('store.update',['id' => $store->id]),$storeParams);
+        $response = $this->actingAs($user)->putJson(route('store.update', ['id' => $store->id]), $storeParams);
+
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('stores', [
             'name' => 'new name',
@@ -76,9 +78,7 @@ class StoreTest extends TestCase
             'description' => 'new description',
             'is_online' => "false"
         ]);
-
-        $response->assertStatus(200);
-    }  
+    }
 
     public function test_user_cant_update_store_not_in_list(): void
     {
@@ -89,7 +89,7 @@ class StoreTest extends TestCase
         ]);
 
         $another_user = User::factory()->create();
-        
+
         $storeParams = [
             'name' => 'new name',
             'address' => 'new address',
@@ -97,10 +97,42 @@ class StoreTest extends TestCase
             'is_online' => "false"
         ];
 
-        $response = $this->actingAs($another_user)->putJson(route('store.update',['id' => $store->id]),$storeParams);
+        $response = $this->actingAs($another_user)->putJson(route('store.update', ['id' => $store->id]), $storeParams);
 
         $response->assertStatus(404);
-    }  
+    }
+
+    public function test_delete_store(): void
+    {
+        $user = User::factory()->create();
+
+        $store = Store::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->deleteJson(route('store.delete', ['id' => $store->id]));
+
+        $response->assertStatus(200);
+
+        $this->assertSoftDeleted('stores', [
+            'id' => $store->id
+        ]);
+    }
+
+    public function test_user_cant_delete_store_not_in_list(): void
+    {
+        $user = User::factory()->create();
+
+        $store = Store::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $another_user = User::factory()->create();
+
+        $response = $this->actingAs($another_user)->deleteJson(route('store.delete', ['id' => $store->id]));
+
+        $response->assertStatus(404);
+    }
 
     public function test_unauthenticated_user_cant_make_any_action(): void
     {
@@ -112,8 +144,12 @@ class StoreTest extends TestCase
 
         $response->assertStatus(401);
 
-        $response = $this->putJson(route('store.update',['id' => 0]));
+        $response = $this->putJson(route('store.update', ['id' => 0]));
 
-        $response->assertStatus(401);        
+        $response->assertStatus(401);
+
+        $response = $this->deleteJson(route('store.delete', ['id' => 0]));
+
+        $response->assertStatus(401);
     }
 }

@@ -38,5 +38,6 @@ Route::name('store.')->prefix('store')->group(function () {
         Route::get('/', [StoreController::class, 'index'])->name('all');
         Route::post('/', [StoreController::class, 'store'])->name('add');
         Route::put('/{id}', [StoreController::class, 'update'])->name('update');
+        Route::delete('/{id}', [StoreController::class, 'delete'])->name('delete');
     });
 });

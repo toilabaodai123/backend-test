@@ -9,8 +9,8 @@ return [
         'success' => 'Store updated successfully',
     ],
     'show' => [
-        'not_found' => 'Cant find this store in your store list to show detail',
-        'success' => 'Show detail of store successfully',
+        'not_found' => 'Cant find this product in your product list to show detail',
+        'success' => 'Show detail of product successfully',
     ],
     'delete' => [
         'not_found' => 'Cant find this store in your store list to delete',

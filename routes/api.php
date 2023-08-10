@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\StoreController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +37,19 @@ Route::name('user.')->prefix('user')->group(function () {
 Route::name('store.')->prefix('store')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [StoreController::class, 'index'])->name('all');
+        Route::get('/{id}', [StoreController::class, 'show'])->name('show');
         Route::post('/', [StoreController::class, 'store'])->name('add');
         Route::put('/{id}', [StoreController::class, 'update'])->name('update');
         Route::delete('/{id}', [StoreController::class, 'delete'])->name('delete');
+    });
+});
+
+Route::name('product.')->prefix('product')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('all');
+        Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+        Route::post('/', [ProductController::class, 'store'])->name('add');
+        Route::put('/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ProductController::class, 'delete'])->name('delete');
     });
 });

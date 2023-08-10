@@ -116,6 +116,66 @@ class StoreController extends Controller
             ]
         ], 200);
     }
+
+    /**
+     * Show detail of a store
+     * 
+     * @OA\Get(
+     *      path="/api/store/{id}",
+     *      tags={"Store"},
+     *      security={{"sanctum":{}}},
+     *      @OA\Parameter(
+     *          name="lang",
+     *          description="Language (EN by default, or VN)",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Store id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not found",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error",
+     *          @OA\JsonContent()
+     *      )
+     * )
+     * @param Request $request
+     */
+    public function show(int $id, Request $request)
+    {
+        $user = $request->user();
+
+        if (empty($store = Store::where('id', $id)->where('user_id', $user->id)->first())) {
+            return response()->json([
+                'message' => __('store.show.not_found'),
+                'data' => []
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => __('store.show.success'),
+            'data' => $store
+        ], 200);
+    }   
+
     /**
      * Add store
      * 

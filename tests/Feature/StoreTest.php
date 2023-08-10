@@ -140,6 +140,10 @@ class StoreTest extends TestCase
 
         $response->assertStatus(401);
 
+        $response = $this->getJson(route('store.show',['id' => 0]));
+
+        $response->assertStatus(401);
+
         $response = $this->postJson(route('store.add'));
 
         $response->assertStatus(401);

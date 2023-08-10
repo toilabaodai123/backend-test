@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,26 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::name('user.')->group(function () {
+Route::name('auth.')->prefix('auth')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/user/info', [UserController::class, 'showUserInfo'])->name('info');
-        Route::post('/auth/logout', [AuthController::class, 'logoutUser'])->name('logout');
+        Route::post('/logout', [AuthController::class, 'logoutUser'])->name('logout');
     });
 
-    Route::post('/auth/register', [AuthController::class, 'createUser'])->name('register');
-    Route::post('/auth/login', [AuthController::class, 'loginUser'])->name('login');
+    Route::post('/register', [AuthController::class, 'createUser'])->name('register');
+    Route::post('/login', [AuthController::class, 'loginUser'])->name('login');
+});
+
+
+Route::name('user.')->prefix('user')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('/info', [UserController::class, 'showUserInfo'])->name('info');
+    });
+});
+
+Route::name('store.')->prefix('store')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/', [StoreController::class, 'index'])->name('all');
+        Route::post('/', [StoreController::class, 'store'])->name('add');
+        Route::put('/{id}', [StoreController::class, 'update'])->name('update');
+    });
 });

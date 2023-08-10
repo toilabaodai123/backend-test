@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->constrained();
+            $table->text('description');
+            $table->string('address');
+            $table->boolean('is_online');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

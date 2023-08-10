@@ -16,14 +16,14 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->getJson(route('user.info'));
+        $response = $this->actingAs($user)->postJson(route('user.info'));
 
         $response->assertStatus(200);
     }
 
     public function test_unauthenticated_user_cant_log_out(): void
     {
-        $response = $this->postJson(route('user.logout'));
+        $response = $this->postJson(route('auth.logout'));
 
         $response->assertStatus(401);
     }
@@ -38,7 +38,7 @@ class UserTest extends TestCase
             'password' => 'password'
         ];
 
-        $response = $this->postJson(route('user.register'),$registerParams);
+        $response = $this->postJson(route('auth.register'),$registerParams);
 
         $response->assertStatus(200);
 
@@ -47,7 +47,7 @@ class UserTest extends TestCase
             'password' => 'password'
         ];
 
-        $loginResponse = $this->postJson(route('user.login'),$loginPamrams);
+        $loginResponse = $this->postJson(route('auth.login'),$loginPamrams);
 
         $loginResponse->assertStatus(200);
     }  

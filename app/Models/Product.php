@@ -11,6 +11,14 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'stock',
+        'price',
+        'store_id'
+    ];
+
     public function store(){
         return $this->belongsTo(Store::class);
     }

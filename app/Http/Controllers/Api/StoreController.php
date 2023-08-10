@@ -386,7 +386,7 @@ class StoreController extends Controller
     }
 
     /**
-     * Update store
+     * Delete store
      * 
      * @OA\Delete(
      *      path="/api/store/{id}",

@@ -13,8 +13,12 @@ class Store extends Model
     protected $fillable = [
         'name',
         'description',
-        'address',
-        'user_id',
-        'is_online',
+        'stock',
+        'price',
+        'store_id',
     ];
+
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }

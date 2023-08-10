@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserTest extends TestCase
 {
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     public function test_get_user_info()
     {

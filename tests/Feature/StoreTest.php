@@ -9,7 +9,7 @@ use App\Models\Store;
 
 class StoreTest extends TestCase
 {
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     public function test_get_all_stores(): void
     {

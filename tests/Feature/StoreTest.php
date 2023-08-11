@@ -70,14 +70,11 @@ class StoreTest extends TestCase
 
         $response = $this->actingAs($user)->putJson(route('store.update', ['id' => $store->id]), $storeParams);
 
-        $response->assertStatus(200);
+        $storeParams['id'] = $store->id;
 
-        $this->assertDatabaseHas('stores', [
-            'name' => 'new name',
-            'address' => 'new address',
-            'description' => 'new description',
-            'is_online' => "false"
-        ]);
+        $this->assertDatabaseHas('stores', $storeParams);
+
+        $response->assertStatus(200);
     }
 
     public function test_user_cant_update_store_not_in_list(): void

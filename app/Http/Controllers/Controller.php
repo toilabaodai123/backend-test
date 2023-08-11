@@ -8,8 +8,8 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     version="1.0",
- *     title="Example for response examples value"
+ *     version="0.1",
+ *     title="Swagger"
  * )
  */
 class Controller extends BaseController

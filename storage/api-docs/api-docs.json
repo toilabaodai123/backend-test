@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Example for response examples value",
-        "version": "1.0"
+        "title": "Swagger",
+        "version": "0.1"
     },
     "paths": {
         "/api/auth/register": {
@@ -929,7 +929,7 @@
                 "tags": [
                     "Store"
                 ],
-                "summary": "Update store",
+                "summary": "Delete store",
                 "operationId": "5f33de922eea5bdbe1fe5826a77d1000",
                 "parameters": [
                     {

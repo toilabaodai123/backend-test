@@ -11,14 +11,14 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_get_user_info()
-    {
-        $user = User::factory()->create();
+    // public function test_get_user_info()
+    // {
+    //     $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->postJson(route('user.info'));
+    //     $response = $this->actingAs($user)->postJson(route('user.info'));
 
-        $response->assertStatus(200);
-    }
+    //     $response->assertStatus(200);
+    // }
 
     public function test_unauthenticated_user_cant_log_out(): void
     {

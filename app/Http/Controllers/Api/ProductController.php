@@ -398,10 +398,10 @@ class ProductController extends Controller
         }
 
         $product->update([
-            'name' => !empty($request->name) ? $request->name : $product->name,
-            'description' => !empty($request->description) ? $request->description : $product->description,
-            'stock' => !empty($request->stock) ? (int)$request->stock : $product->stock,
-            'price' => !empty($request->price) ? (int)$request->price : $product->price,
+            'name' => $request->name ? $request->name : $product->name,
+            'description' => $request->description ? $request->description : $product->description,
+            'stock' => $request->stock? (int)$request->stock : $product->stock,
+            'price' => $request->price ? (int)$request->price : $product->price,
         ]);
 
         return response()->json([

@@ -28,11 +28,11 @@ Route::name('auth.')->prefix('auth')->group(function () {
 });
 
 
-Route::name('user.')->prefix('user')->group(function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/info', [UserController::class, 'showUserInfo'])->name('info');
-    });
-});
+// Route::name('user.')->prefix('user')->group(function () {
+//     Route::middleware(['auth:sanctum'])->group(function () {
+//         Route::post('/info', [UserController::class, 'showUserInfo'])->name('info');
+//     });
+// });
 
 Route::name('store.')->prefix('store')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {

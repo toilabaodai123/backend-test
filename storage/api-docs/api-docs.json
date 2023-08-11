@@ -982,46 +982,6 @@
                     }
                 ]
             }
-        },
-        "/api/user/info": {
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Get user information",
-                "operationId": "439313c7ca6f890c67d7658bd115b33e",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
         }
     },
     "components": {

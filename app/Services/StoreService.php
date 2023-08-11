@@ -6,35 +6,24 @@ namespace App\Services;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use Exception;
+use App\Contracts\StoreRepositoryInterface;
 
 class StoreService implements \App\Contracts\StoreServiceInterface
 {
+    private $storeRepository;
+
+    public function __construct(StoreRepositoryInterface $storeRepository)
+    {
+        $this->storeRepository = $storeRepository;   
+    }
 
     public function index(Request $request)
     {
         $user = $request->user();
 
-        $limitOfPagination = !empty($request->limit) ? $request->limit : 10;
+        $stores = $this->storeRepository->searchStore($user->id,$request);
 
-        $stores = Store::where('user_id', $user->id);
-
-        if (!empty($request->name)) {
-            $stores->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if (!empty($request->description)) {
-            $stores->where('description', 'like', '%' . $request->description . '%');
-        }
-
-        if (!empty($request->address)) {
-            $stores->where('address', 'like', '%' . $request->address . '%');
-        }
-
-        if (!empty($request->is_online)) {
-            $stores->where('is_online', $request->is_online == "true" ? 1 : 0);
-        }
-
-        return $stores->paginate($limitOfPagination);
+        return $stores;
     }
 
     public function show(int $id, Request $request)

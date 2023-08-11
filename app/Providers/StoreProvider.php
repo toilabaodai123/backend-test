@@ -8,7 +8,7 @@ use App\Services\StoreService;
 use App\Contracts\StoreHelperInterface;
 use App\Helpers\StoreHelper;
 use App\Contracts\StoreRepositoryInterface;
-use App\Repository\StoreRepository;
+use App\Repositories\StoreRepository;
 
 class StoreProvider extends ServiceProvider
 {

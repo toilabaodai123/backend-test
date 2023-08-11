@@ -55,20 +55,70 @@ class AuthController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=422,
-     *          description="Bad credentials",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={
+     *                              "token" : "abc"
+     *                         }
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="422",
+     *         description="Bad inputs",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Bad inputs"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -136,25 +186,91 @@ class AuthController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Login successfully",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Wrong credentials",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={
+     *                              "token" : "abc"
+     *                         }
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=422,
-     *          description="Bad credentials",
-     *          @OA\JsonContent()
+     *         response="401",
+     *         description="Wrong credentials",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Wrong credentials"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="422",
+     *         description="Bad inputs",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Bad inputs"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -207,19 +323,67 @@ class AuthController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Logout successfully",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *          @OA\JsonContent()
+     *         response="401",
+     *         description="Wrong credentials",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Wrong credentials"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      )
      * )
      * @param Request $request

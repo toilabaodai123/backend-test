@@ -75,20 +75,71 @@ class ProductController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         type="array",
+     *                         @OA\Items(
+     *                             ref="#/components/schemas/ProductSchema",
+     *                         )
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="401",
+     *         description="Wrong credentials",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Wrong credentials"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -159,20 +210,68 @@ class ProductController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Not found",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         ref="#/components/schemas/ProductSchema"
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="404",
+     *         description="Not found",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Not found"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -256,20 +355,68 @@ class ProductController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=422,
-     *          description="Bad credentials",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         ref="#/components/schemas/ProductSchema"
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="422",
+     *         description="Bad inputs",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Bad inputs"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -367,20 +514,68 @@ class ProductController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Not found",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         ref="#/components/schemas/ProductSchema"
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="404",
+     *         description="Not found",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Not found"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -400,7 +595,7 @@ class ProductController extends Controller
         $product->update([
             'name' => $request->name ? $request->name : $product->name,
             'description' => $request->description ? $request->description : $product->description,
-            'stock' => $request->stock? (int)$request->stock : $product->stock,
+            'stock' => $request->stock ? (int)$request->stock : $product->stock,
             'price' => $request->price ? (int)$request->price : $product->price,
         ]);
 
@@ -435,20 +630,68 @@ class ProductController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent()
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Not found",
-     *          @OA\JsonContent()
+     *         response="200",
+     *         description="Success",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Success"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Error",
-     *          @OA\JsonContent()
-     *      )
+     *         response="404",
+     *         description="Not found",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Not found"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message",
+     *                         example="Server error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         example={}
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *      ),
      * )
      * @param Request $request
      */
@@ -471,5 +714,5 @@ class ProductController extends Controller
             'message' => __('product.delete.success'),
             'data' => $product
         ], 200);
-    }    
+    }
 }

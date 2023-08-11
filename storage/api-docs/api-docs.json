@@ -52,26 +52,64 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "example": {
+                                                "token": "abc"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "422": {
-                        "description": "Bad credentials",
+                        "description": "Bad inputs",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -116,10 +154,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Login successfully",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "example": {
+                                                "token": "abc"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -127,23 +179,59 @@
                         "description": "Wrong credentials",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Wrong credentials"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "422": {
-                        "description": "Bad credentials",
+                        "description": "Bad inputs",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -169,26 +257,62 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Logout successfully",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "401": {
-                        "description": "Unauthenticated",
+                        "description": "Wrong credentials",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Wrong credentials"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -267,26 +391,65 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProductSchema"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "401": {
-                        "description": "Unauthenticated",
+                        "description": "Wrong credentials",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Wrong credentials"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -360,26 +523,62 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ProductSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "422": {
-                        "description": "Bad credentials",
+                        "description": "Bad inputs",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -419,10 +618,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ProductSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -430,15 +641,39 @@
                         "description": "Not found",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -508,10 +743,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ProductSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -519,15 +766,39 @@
                         "description": "Not found",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -565,10 +836,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -576,15 +859,39 @@
                         "description": "Not found",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -655,26 +962,45 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StoreSchema"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -713,6 +1039,7 @@
                         "name": "description",
                         "in": "query",
                         "description": "Description",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         }
@@ -738,26 +1065,62 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StoreSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "422": {
-                        "description": "Bad credentials",
+                        "description": "Bad inputs",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -797,10 +1160,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StoreSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -808,15 +1183,39 @@
                         "description": "Not found",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -887,10 +1286,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StoreSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -898,23 +1309,59 @@
                         "description": "Not found",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "422": {
-                        "description": "Bad credentials",
+                        "description": "Bad inputs",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -952,10 +1399,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
@@ -963,15 +1422,39 @@
                         "description": "Not found",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     },
                     "500": {
-                        "description": "Error",
+                        "description": "Server error",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -985,6 +1468,89 @@
         }
     },
     "components": {
+        "schemas": {
+            "ProductSchema": {
+                "properties": {
+                    "store": {
+                        "$ref": "#/components/schemas/StoreSchema"
+                    },
+                    "name": {
+                        "description": "Product name",
+                        "type": "string",
+                        "example": "Product name A",
+                        "nullable": "false"
+                    },
+                    "description": {
+                        "description": "Description",
+                        "type": "string",
+                        "example": "Description A",
+                        "nullable": "false"
+                    },
+                    "stock": {
+                        "description": "Stock",
+                        "type": "integer",
+                        "example": 1234,
+                        "nullable": "false"
+                    },
+                    "price": {
+                        "description": "price",
+                        "type": "integer",
+                        "example": 123444,
+                        "nullable": "false"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreSchema": {
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/UserSchema"
+                    },
+                    "name": {
+                        "description": "Store name",
+                        "type": "string",
+                        "example": "Store name A",
+                        "nullable": "false"
+                    },
+                    "Description": {
+                        "description": "Description",
+                        "type": "string",
+                        "example": "Description A",
+                        "nullable": "false"
+                    },
+                    "Address": {
+                        "description": "Address",
+                        "type": "string",
+                        "example": "Address A",
+                        "nullable": "false"
+                    },
+                    "is_online": {
+                        "description": "Is online?",
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": "false"
+                    }
+                },
+                "type": "object"
+            },
+            "UserSchema": {
+                "properties": {
+                    "name": {
+                        "description": "User name",
+                        "type": "string",
+                        "example": "Kellen Boyer",
+                        "nullable": "false"
+                    },
+                    "email": {
+                        "description": "User E-mail",
+                        "type": "string",
+                        "example": "kellen.boyer@example.com",
+                        "nullable": "false"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "http",

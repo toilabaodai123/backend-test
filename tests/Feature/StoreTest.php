@@ -65,7 +65,7 @@ class StoreTest extends TestCase
             'name' => 'new name',
             'address' => 'new address',
             'description' => 'new description',
-            'is_online' => "false"
+            'is_online' => false
         ];
 
         $response = $this->actingAs($user)->putJson(route('store.update', ['id' => $store->id]), $storeParams);
@@ -91,7 +91,7 @@ class StoreTest extends TestCase
             'name' => 'new name',
             'address' => 'new address',
             'description' => 'new description',
-            'is_online' => "false"
+            'is_online' => false
         ];
 
         $response = $this->actingAs($another_user)->putJson(route('store.update', ['id' => $store->id]), $storeParams);

@@ -14,7 +14,7 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
-    'bad_credential' => 'Bad credentials',
+    'bad_credential' => 'Bad inputs',
     'wrong_credential' => 'Wrong email or mật khẩu',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',

@@ -10,12 +10,18 @@ class Store extends Model
 {
     use HasFactory,SoftDeletes;
 
+    const NAME = 'name';
+    const DESCRIPTION = 'description';
+    const ADDRESS = 'address';
+    const USER_ID = 'user_id';
+    const IS_ONLINE = 'is_online';
+
     protected $fillable = [
-        'name',
-        'description',
-        'address',
-        'user_id',
-        'is_online'
+        self::NAME,
+        self::DESCRIPTION,
+        self::ADDRESS,
+        self::USER_ID,
+        self::IS_ONLINE
     ];
 
     public function products(){

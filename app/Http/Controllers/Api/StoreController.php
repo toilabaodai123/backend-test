@@ -5,11 +5,25 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Store;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
-
+use App\Contracts\StoreServiceInterface;
+use Illuminate\Support\Facades\DB;
+use Exception;
+use App\Contracts\StoreHelperInterface;
 
 class StoreController extends Controller
 {
+
+    private $storeService;
+    private $storeHelper;
+
+    public function __construct(StoreServiceInterface $storeService, StoreHelperInterface $storeHelper)
+    {
+        $this->storeService = $storeService;
+        $this->storeHelper = $storeHelper;
+    }
+
     /**
      * Get all stores of current user
      * 
@@ -113,38 +127,30 @@ class StoreController extends Controller
      * )
      * @param Request $request
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('store.show.success'),
+            'data' => [],
+        ];
 
-        $limitOfPagination = !empty($request->limit) ? $request->limit : 10;
+        $code = 200;
 
-        $stores = Store::where('user_id', $user->id);
+        try {
+            DB::beginTransaction();
 
-        if (!empty($request->name)) {
-            $stores->where('name', 'like', '%' . $request->name . '%');
+            $response['data'] = $this->storeService->index($request);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
         }
 
-        if (!empty($request->description)) {
-            $stores->where('description', 'like', '%' . $request->description . '%');
-        }
+        DB::commit();
 
-        if (!empty($request->address)) {
-            $stores->where('address', 'like', '%' . $request->address . '%');
-        }
-
-        if (!empty($request->is_online)) {
-            $stores->where('is_online', $request->is_online == "true" ? 1 : 0);
-        }
-
-        $stores = $stores->paginate($limitOfPagination);
-
-        return response()->json([
-            'message' => "",
-            'data' => [
-                'data' => $stores
-            ]
-        ], 200);
+        return response()->json($response, $code);
     }
 
     /**
@@ -239,19 +245,28 @@ class StoreController extends Controller
      */
     public function show(int $id, Request $request)
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('store.show.success'),
+            'data' => null
+        ];
 
-        if (empty($store = Store::where('id', $id)->where('user_id', $user->id)->first())) {
-            return response()->json([
-                'message' => __('store.show.not_found'),
-                'data' => []
-            ], 404);
+        $code = 200;
+
+        try {
+            DB::beginTransaction();
+
+            $response['data'] = $this->storeService->show($id, $request);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
         }
 
-        return response()->json([
-            'message' => __('store.show.success'),
-            'data' => $store
-        ], 200);
+        DB::commit();
+
+        return response()->json($response, $code);
     }
 
     /**
@@ -373,37 +388,30 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'address' => 'required',
-            'is_online' => 'required'
-        ]);
+        $response = [
+            'message' => __('store.create.success'),
+            'data' => null
+        ];
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => __('validation.bad_credential'),
-                'data' => [
-                    'error' => $validator->errors(),
-                ]
-            ], 422);
+        $code = 200;
+
+        try {
+            DB::beginTransaction();
+
+            $this->storeHelper->validateStoreRequest($request);
+
+            $response['data'] = $this->storeService->store($request);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
         }
 
-        $user = $request->user();
+        DB::commit();
 
-        $store = Store::create([
-            'name' => $request->name,
-            'user_id' => $user->id,
-            'description' => $request->description ?? "",
-            'address' => $request->address ?? "",
-            'is_online' => (bool)$request->is_online
-        ]);
-
-        return response()->json([
-            'message' => __('store.create.success'),
-            'data' => [
-                'store' => $store
-            ]
-        ], 200);
+        return response()->json($response, $code);
     }
 
     /**
@@ -552,41 +560,30 @@ class StoreController extends Controller
      */
     public function update(int $id, Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'is_online' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => __('validation.bad_credential'),
-                'data' => [
-                    'error' => $validator->errors(),
-                ]
-            ], 422);
-        }
-
-        $user = $request->user();
-
-        if (empty($store = Store::where('id', $id)->where('user_id', $user->id)->first())) {
-            return response()->json([
-                'message' => __('store.update.not_found'),
-                'data' => []
-            ], 404);
-        }
-
-        $store->update([
-            'name' => $request->name ? $request->name : $store->name,
-            'description' => $request->description ? $request->description : $store->description,
-            'address' => $request->address ? $request->address : $store->address,
-            'is_online' => (bool)$request->is_online
-        ]);
-
-        return response()->json([
+        $response = [
             'message' => __('store.update.success'),
-            'data' => [
-                'store' => $store
-            ]
-        ], 200);
+            'data' => null
+        ];
+
+        $code = 200;
+
+        try {
+            DB::beginTransaction();
+
+            $this->storeHelper->validateUpdateRequest($request);
+
+            $response['data'] = $this->storeService->update($id, $request);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
+        }
+
+        DB::commit();
+
+        return response()->json($response, $code);
     }
 
     /**
@@ -681,20 +678,27 @@ class StoreController extends Controller
      */
     public function delete(int $id, Request $request)
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('store.delete.success'),
+            'data' => null
+        ];
 
-        if (empty($store = Store::where('id', $id)->where('user_id', $user->id)->first())) {
-            return response()->json([
-                'message' => __('store.delete.not_found'),
-                'data' => []
-            ], 404);
+        $code = 200;
+
+        try {
+            DB::beginTransaction();
+
+            $response['data'] = $this->storeService->delete($id, $request);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
         }
 
-        $store->delete();
+        DB::commit();
 
-        return response()->json([
-            'message' => __('store.delete.success'),
-            'data' => []
-        ], 200);
+        return response()->json($response, $code);
     }
 }

@@ -66,7 +66,7 @@ class StoreRepository implements StoreRepositoryInterface
     public function create(array $data)
     {
         $store = Store::create($data);
-
+        
         return $store;
     }
 }

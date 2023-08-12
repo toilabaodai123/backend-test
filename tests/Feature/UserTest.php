@@ -37,7 +37,7 @@ class UserTest extends TestCase
             'password' => 'password'
         ];
 
-        $response = $this->postJson(route('auth.register'),$registerParams);
+        $response = $this->postJson(route('user.add'),$registerParams);
 
         $this->assertDatabaseHas('users', [
             'email' => $user->email

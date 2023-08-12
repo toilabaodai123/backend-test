@@ -23,8 +23,11 @@ Route::name('auth.')->prefix('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 
-    Route::post('/register', [AuthController::class, 'createUser'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+});
+
+Route::name('user.')->prefix('user')->group(function () {
+    Route::post('/', [UserController::class, 'store'])->name('add');
 });
 
 Route::name('store.')->prefix('store')->group(function () {

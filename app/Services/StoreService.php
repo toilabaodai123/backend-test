@@ -8,6 +8,7 @@ use App\Models\Store;
 use App\Models\User;
 use Exception;
 use App\Contracts\StoreRepositoryInterface;
+use App\Http\Requests\StoreStoreRequest;
 
 /**
  * StoreService
@@ -71,7 +72,7 @@ class StoreService implements \App\Contracts\StoreServiceInterface
         $response = $store;
 
         return $response;
-    }
+    }   
 
     /**
      * store
@@ -80,7 +81,7 @@ class StoreService implements \App\Contracts\StoreServiceInterface
      * @return void
      */
     public function store(Request $request)
-    {
+    {   
         $response = null;
 
         $user = $request->user();
@@ -92,7 +93,7 @@ class StoreService implements \App\Contracts\StoreServiceInterface
             Store::COLUMN_ADDRESS => $request->get(Store::COLUMN_ADDRESS),
             STORE::COLUMN_IS_ONLINE => (bool)$request->get(Store::COLUMN_IS_ONLINE)
         ];
-        
+
         $store = $this->storeRepository->create($storeData);
 
         $response = $store;

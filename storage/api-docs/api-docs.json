@@ -5,13 +5,576 @@
         "version": "0.1"
     },
     "paths": {
-        "/api/auth/register": {
+        "/api/store": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get all stores of current user",
+                "operationId": "4bd32b23073b5f1ab894a75905369b2d",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Description",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Address",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_online",
+                        "in": "query",
+                        "description": "Is the store online?",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StoreSchema"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
-                    "Auth"
+                    "Store"
+                ],
+                "summary": "Add store",
+                "operationId": "6d445cf20959966c49aa933058d2e52b",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Language (EN by default, or VN)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Description",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Address",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_online",
+                        "in": "query",
+                        "description": "Is the store online?",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StoreSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad inputs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/store/{id}": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Show detail of a store",
+                "operationId": "b241c0ed97a16fccdcf9ce9fc9beb20d",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Language (EN by default, or VN)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Store id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StoreSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Update store",
+                "operationId": "fe93a8723f075945540c2018ef8c693e",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Language (EN by default, or VN)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Store id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Description",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Address",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_online",
+                        "in": "query",
+                        "description": "Is the store online?",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StoreSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad inputs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Bad inputs"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Delete store",
+                "operationId": "f66f5964ec819b47f3bbccef645424da",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Language (EN by default, or VN)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Store id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Not found"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string",
+                                            "example": "Server error"
+                                        },
+                                        "data": {
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/user/register": {
+            "post": {
+                "tags": [
+                    "User"
                 ],
                 "summary": "Register User",
-                "operationId": "a93d5d5a149e131b23859ee1d18d1628",
+                "operationId": "c20a9a0f111be29aafd3e9ed45f80a45",
                 "parameters": [
                     {
                         "name": "lang",
@@ -122,7 +685,7 @@
                     "Auth"
                 ],
                 "summary": "Login User",
-                "operationId": "ce8a703b01ee5813fac792caa2965d23",
+                "operationId": "dd51a484b7fa0f97c7680fdbde14cf5f",
                 "parameters": [
                     {
                         "name": "lang",
@@ -244,7 +807,7 @@
                     "Auth"
                 ],
                 "summary": "Logout User",
-                "operationId": "7ad3bc43d0b6ce55dac83cd3b93c965e",
+                "operationId": "df9bdc6c7a6d9f20b983526b2ec0f698",
                 "parameters": [
                     {
                         "name": "lang",
@@ -828,569 +1391,6 @@
                         "name": "id",
                         "in": "path",
                         "description": "Product id",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Success"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Not found"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Server error"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/store": {
-            "get": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Get all stores of current user",
-                "operationId": "92d245cd7da6edfe561ef9e148854108",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "name",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "query",
-                        "description": "Description",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "address",
-                        "in": "query",
-                        "description": "Address",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "is_online",
-                        "in": "query",
-                        "description": "Is the store online?",
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Success"
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/StoreSchema"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Server error"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Add store",
-                "operationId": "c8f155988c45afc945410c3dfda22da9",
-                "parameters": [
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "Language (EN by default, or VN)",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "query",
-                        "description": "Description",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "address",
-                        "in": "query",
-                        "description": "Address",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "is_online",
-                        "in": "query",
-                        "description": "Is the store online?",
-                        "required": true,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Success"
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/StoreSchema"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Bad inputs",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Bad inputs"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Server error"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/store/{id}": {
-            "get": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Show detail of a store",
-                "operationId": "4ca624f95a82874d9264b98ee4e19ed8",
-                "parameters": [
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "Language (EN by default, or VN)",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Store id",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Success"
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/StoreSchema"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Not found"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Server error"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Update store",
-                "operationId": "83837defa80e2fd522d438adf683afde",
-                "parameters": [
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "Language (EN by default, or VN)",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Store id",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Name",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "query",
-                        "description": "Description",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "address",
-                        "in": "query",
-                        "description": "Address",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "is_online",
-                        "in": "query",
-                        "description": "Is the store online?",
-                        "required": true,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Success"
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/StoreSchema"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Not found"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Bad inputs",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Bad inputs"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "The response message",
-                                            "type": "string",
-                                            "example": "Server error"
-                                        },
-                                        "data": {
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Delete store",
-                "operationId": "6afde112f11e1da971243668cbaa6b8d",
-                "parameters": [
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "Language (EN by default, or VN)",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Store id",
                         "required": true,
                         "schema": {
                             "type": "string"

@@ -8,23 +8,43 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Store extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    const NAME = 'name';
-    const DESCRIPTION = 'description';
-    const ADDRESS = 'address';
-    const USER_ID = 'user_id';
-    const IS_ONLINE = 'is_online';
+    const COLUMN_ID = 'id';
+    const COLUMN_NAME = 'name';
+    const COLUMN_DESCRIPTION = 'description';
+    const COLUMN_ADDRESS = 'address';
+    const COLUMN_USER_ID = 'user_id';
+    const COLUMN_IS_ONLINE = 'is_online';
 
-    protected $fillable = [
-        self::NAME,
-        self::DESCRIPTION,
-        self::ADDRESS,
-        self::USER_ID,
-        self::IS_ONLINE
+    const COLUMN_ARRAY = [
+        self::COLUMN_NAME,
+        self::COLUMN_DESCRIPTION,
+        self::COLUMN_ADDRESS,
+        self::COLUMN_USER_ID,
+        self::COLUMN_IS_ONLINE
     ];
-
-    public function products(){
+    
+    /**
+     * fillable
+     *
+     * @var array
+     */
+    protected $fillable = [
+        self::COLUMN_NAME,
+        self::COLUMN_DESCRIPTION,
+        self::COLUMN_ADDRESS,
+        self::COLUMN_USER_ID,
+        self::COLUMN_IS_ONLINE
+    ];   
+    
+    /**
+     * products
+     *
+     * @return void
+     */
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
 }

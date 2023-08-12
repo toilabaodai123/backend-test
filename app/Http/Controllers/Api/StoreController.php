@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
 use App\Contracts\StoreServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Contracts\StoreHelperInterface;
+use App\Contracts\StoreSwaggerInterface;
 
-class StoreController extends Controller
+class StoreController extends Controller implements StoreSwaggerInterface
 {
 
     private $storeService;
@@ -24,110 +24,7 @@ class StoreController extends Controller
         $this->storeHelper = $storeHelper;
     }
 
-    /**
-     * Get all stores of current user
-     * 
-     * @OA\Get(
-     *      path="/api/store",
-     *      tags={"Store"},
-     *      security={{"sanctum":{}}},
-     *      @OA\Parameter(
-     *          name="page",
-     *          description="Page",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="limit",
-     *          description="Limit",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="name",
-     *          description="name",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ), 
-     *      @OA\Parameter(
-     *          name="description",
-     *          description="Description",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="address",
-     *          description="Address",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="is_online",
-     *          description="Is the store online?",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="boolean"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         type="array",
-     *                         @OA\Items(
-     *                             ref="#/components/schemas/StoreSchema",
-     *                         )
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     * )
-     * @param Request $request
-     */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         $response = [
             'message' => __('store.show.success'),
@@ -153,97 +50,7 @@ class StoreController extends Controller
         return response()->json($response, $code);
     }
 
-    /**
-     * Show detail of a store
-     * 
-     * @OA\Get(
-     *      path="/api/store/{id}",
-     *      tags={"Store"},
-     *      security={{"sanctum":{}}},
-     *      @OA\Parameter(
-     *          name="lang",
-     *          description="Language (EN by default, or VN)",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="id",
-     *          description="Store id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         ref="#/components/schemas/StoreSchema"
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="404",
-     *         description="Not found",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Not found"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     * )
-     * @param Request $request
-     */
-    public function show(int $id, Request $request)
+    public function show(int $store_id, Request $request)
     {
         $response = [
             'message' => __('store.show.success'),
@@ -255,7 +62,7 @@ class StoreController extends Controller
         try {
             DB::beginTransaction();
 
-            $response['data'] = $this->storeService->show($id, $request);
+            $response['data'] = $this->storeService->show($store_id, $request);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -269,123 +76,6 @@ class StoreController extends Controller
         return response()->json($response, $code);
     }
 
-    /**
-     * Add store
-     * 
-     * @OA\Post(
-     *      path="/api/store",
-     *      tags={"Store"},
-     *      security={{"sanctum":{}}},
-     *      @OA\Parameter(
-     *          name="lang",
-     *          description="Language (EN by default, or VN)",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="name",
-     *          description="Name",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="description",
-     *          description="Description",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="address",
-     *          description="Address",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="is_online",
-     *          description="Is the store online?",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="boolean"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         ref="#/components/schemas/StoreSchema"
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="422",
-     *         description="Bad inputs",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Bad inputs"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     * )
-     * @param Request $request
-     */
     public function store(Request $request)
     {
         $response = [
@@ -414,151 +104,7 @@ class StoreController extends Controller
         return response()->json($response, $code);
     }
 
-    /**
-     * Update store
-     * 
-     * @OA\Put(
-     *      path="/api/store/{id}",
-     *      tags={"Store"},
-     *      security={{"sanctum":{}}},
-     *      @OA\Parameter(
-     *          name="lang",
-     *          description="Language (EN by default, or VN)",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="id",
-     *          description="Store id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="name",
-     *          description="Name",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="description",
-     *          description="Description",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="address",
-     *          description="Address",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="is_online",
-     *          description="Is the store online?",
-     *          in="query",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="boolean"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         ref="#/components/schemas/StoreSchema"
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="404",
-     *         description="Not found",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Not found"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="422",
-     *         description="Bad inputs",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Bad inputs"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     * )
-     * @param Request $request
-     */
-    public function update(int $id, Request $request)
+    public function update(int $store_id, Request $request)
     {
         $response = [
             'message' => __('store.update.success'),
@@ -572,7 +118,7 @@ class StoreController extends Controller
 
             $this->storeHelper->validateUpdateRequest($request);
 
-            $response['data'] = $this->storeService->update($id, $request);
+            $response['data'] = $this->storeService->update($store_id, $request);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -586,97 +132,7 @@ class StoreController extends Controller
         return response()->json($response, $code);
     }
 
-    /**
-     * Delete store
-     * 
-     * @OA\Delete(
-     *      path="/api/store/{id}",
-     *      tags={"Store"},
-     *      security={{"sanctum":{}}},
-     *      @OA\Parameter(
-     *          name="lang",
-     *          description="Language (EN by default, or VN)",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="id",
-     *          description="Store id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="404",
-     *         description="Not found",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Not found"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     * )
-     * @param Request $request
-     */
-    public function delete(int $id, Request $request)
+    public function delete(int $store_id, Request $request)
     {
         $response = [
             'message' => __('store.delete.success'),
@@ -688,7 +144,7 @@ class StoreController extends Controller
         try {
             DB::beginTransaction();
 
-            $response['data'] = $this->storeService->delete($id, $request);
+            $response['data'] = $this->storeService->delete($store_id, $request);
         } catch (Exception $e) {
             DB::rollBack();
 

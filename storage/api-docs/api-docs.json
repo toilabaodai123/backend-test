@@ -909,7 +909,7 @@
                     "Store"
                 ],
                 "summary": "Get all stores of current user",
-                "operationId": "69ab226e7ad5bc26e6f79dc000c98f81",
+                "operationId": "92d245cd7da6edfe561ef9e148854108",
                 "parameters": [
                     {
                         "name": "page",
@@ -1016,7 +1016,7 @@
                     "Store"
                 ],
                 "summary": "Add store",
-                "operationId": "1c859e1a0322fc4513a1f6ccec1003ca",
+                "operationId": "c8f155988c45afc945410c3dfda22da9",
                 "parameters": [
                     {
                         "name": "lang",
@@ -1138,7 +1138,7 @@
                     "Store"
                 ],
                 "summary": "Show detail of a store",
-                "operationId": "6ea14485662e26983ae2cf2e3dce00a0",
+                "operationId": "4ca624f95a82874d9264b98ee4e19ed8",
                 "parameters": [
                     {
                         "name": "lang",
@@ -1231,7 +1231,7 @@
                     "Store"
                 ],
                 "summary": "Update store",
-                "operationId": "d8d4c15d13223ec92e7dca74fed6d082",
+                "operationId": "83837defa80e2fd522d438adf683afde",
                 "parameters": [
                     {
                         "name": "lang",
@@ -1377,7 +1377,7 @@
                     "Store"
                 ],
                 "summary": "Delete store",
-                "operationId": "5f33de922eea5bdbe1fe5826a77d1000",
+                "operationId": "6afde112f11e1da971243668cbaa6b8d",
                 "parameters": [
                     {
                         "name": "lang",

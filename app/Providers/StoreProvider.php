@@ -10,6 +10,9 @@ use App\Helpers\StoreHelper;
 use App\Contracts\StoreRepositoryInterface;
 use App\Repositories\StoreRepository;
 
+/**
+ * StoreProvider
+ */
 class StoreProvider extends ServiceProvider
 {
     /**

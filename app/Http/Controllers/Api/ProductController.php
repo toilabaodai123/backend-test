@@ -8,10 +8,12 @@ use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Support\Facades\Validator;
 use App\Contracts\ProductSwaggerInterface;
-
+use App\Traits\CheckErrorCode;
 
 class ProductController extends Controller implements ProductSwaggerInterface
 {
+    use CheckErrorCode;
+    
     public function index(Request $request)
     {
         $user = $request->user();

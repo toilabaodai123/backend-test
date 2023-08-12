@@ -9,9 +9,11 @@ use App\Contracts\UserHelperInterface;
 use App\Contracts\UserServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Traits\CheckErrorCode;
 
 class UserController extends Controller implements UserSwaggerInterface
 {
+    use CheckErrorCode;
     private $userHelper;
     private $userService;
 
@@ -43,7 +45,7 @@ class UserController extends Controller implements UserSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);

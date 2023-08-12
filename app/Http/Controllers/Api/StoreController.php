@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Contracts\StoreHelperInterface;
 use App\Contracts\StoreSwaggerInterface;
+use App\Traits\CheckErrorCode;
 
 class StoreController extends Controller implements StoreSwaggerInterface
 {
+    use CheckErrorCode;
 
     private $storeService;
     private $storeHelper;
@@ -44,7 +46,7 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);
@@ -70,7 +72,7 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);
@@ -98,7 +100,7 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);
@@ -126,7 +128,7 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);
@@ -152,7 +154,7 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);

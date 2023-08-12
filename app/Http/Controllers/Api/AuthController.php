@@ -11,9 +11,12 @@ use App\Contracts\AuthHelperInterface;
 use App\Contracts\AuthServiceInterface;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Traits\CheckErrorCode;
 
 class AuthController extends Controller implements AuthSwaggerInterface
 {
+    use CheckErrorCode;
+
     private $authHelper;
     private $authService;
 
@@ -45,7 +48,7 @@ class AuthController extends Controller implements AuthSwaggerInterface
 
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);
@@ -72,7 +75,7 @@ class AuthController extends Controller implements AuthSwaggerInterface
             
             $response['message'] = $e->getMessage();
 
-            $code = $e->getCode();
+            $code = $this->checkErrorCode($e->getCode());
         }
 
         return response()->json($response, $code);

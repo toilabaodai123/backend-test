@@ -11,15 +11,6 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    // public function test_get_user_info()
-    // {
-    //     $user = User::factory()->create();
-
-    //     $response = $this->actingAs($user)->postJson(route('user.info'));
-
-    //     $response->assertStatus(200);
-    // }
-
     public function test_unauthenticated_user_cant_log_out(): void
     {
         $response = $this->postJson(route('auth.logout'));
@@ -37,7 +28,7 @@ class UserTest extends TestCase
             'password' => 'password'
         ];
 
-        $response = $this->postJson(route('user.add'),$registerParams);
+        $response = $this->postJson(route('user.add'), $registerParams);
 
         $this->assertDatabaseHas('users', [
             'email' => $user->email
@@ -50,8 +41,8 @@ class UserTest extends TestCase
             'password' => 'password'
         ];
 
-        $loginResponse = $this->postJson(route('auth.login'),$loginPamrams);
+        $loginResponse = $this->postJson(route('auth.login'), $loginPamrams);
 
         $loginResponse->assertStatus(200);
-    }  
+    }
 }

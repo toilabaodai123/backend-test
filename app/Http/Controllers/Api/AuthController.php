@@ -6,251 +6,75 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Contracts\AuthSwaggerInterface;
+use App\Contracts\AuthHelperInterface;
+use App\Contracts\AuthServiceInterface;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
-use Illuminate\Support\Facades\Auth;
-
-
-class AuthController extends Controller
+class AuthController extends Controller implements AuthSwaggerInterface
 {
-    /**
-     * Login User
-     * 
-     * @OA\Post(
-     *      path="/api/auth/login",
-     *      tags={"Auth"},
-     *      @OA\Parameter(
-     *          name="lang",
-     *          description="Language (EN by default, or VN)",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="email",
-     *          description="Email",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="password",
-     *          description="Password",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string",
-     *              format="password"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={
-     *                              "token" : "abc"
-     *                         }
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="401",
-     *         description="Wrong credentials",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Wrong credentials"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="422",
-     *         description="Bad inputs",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Bad inputs"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     * )
-     * @param Request $request
-     */
-    public function login(Request $request)
+    private $authHelper;
+    private $authService;
+
+    public function __construct(AuthHelperInterface $authHelper, AuthServiceInterface $authService)
     {
-        $validator = Validator::make($request->all(),User::VALIDATION_LOGIN_RULES);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => __('validation.bad_credential'),
-                'data' => [
-                    'error' => $validator->errors(),
-                ]
-            ], 422);
-        }
-
-        if (!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json([
-                'message' => __('auth.wrong_credential'),
-                'data' => []
-            ], 401);
-        }
-
-        $user = User::where('email', $request->email)->first();
-
-        return response()->json([
-            'message' => __('auth.login.success'),
-            'data' => [
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ]
-        ], 200);
+        $this->authHelper = $authHelper;
+        $this->authService = $authService;
     }
 
-    /**
-     * Logout User
-     * 
-     * @OA\Post(
-     *      path="/api/auth/logout",
-     *      tags={"Auth"},
-     *      security={{"sanctum":{}}},
-     *      @OA\Parameter(
-     *          name="lang",
-     *          description="Language (EN by default, or VN)",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *         response="200",
-     *         description="Success",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Success"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="401",
-     *         description="Wrong credentials",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Wrong credentials"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      ),
-     *      @OA\Response(
-     *         response="500",
-     *         description="Server error",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message",
-     *                         example="Server error"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         example={}
-     *                     )
-     *                 )
-     *             )
-     *         }
-     *      )
-     * )
-     * @param Request $request
-     */
+    public function login(Request $request)
+    {
+        $response = [
+            'message' => __('auth.login.success'),
+            'data' => [],
+        ];
+
+        $code = 200;
+        
+        try {
+            DB::beginTransaction();
+
+            $this->authHelper->validateLoginRequest($request);
+
+            $response['data']['token'] = $this->authService->login($request);
+            
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
+        }
+
+        return response()->json($response, $code);
+    }
+
+
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
+        $response = [
             'message' => __('auth.logout.success'),
-        ], 200);
+            'data' => [],
+        ];
+
+        $code = 200;
+
+        try {
+            DB::beginTransaction();
+
+            $response['data'] = $this->authService->logout($request);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            $response['message'] = $e->getMessage();
+
+            $code = $e->getCode();
+        }
+
+        return response()->json($response, $code);
     }
 }

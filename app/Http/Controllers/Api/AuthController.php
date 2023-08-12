@@ -124,11 +124,7 @@ class AuthController extends Controller
      */
     public function createUser(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-        ]);
+        $validator = Validator::make($request->all(),User::VALIDATION_STORE_RULES);
 
         if ($validator->fails()) {
             return response()->json([
@@ -274,12 +270,9 @@ class AuthController extends Controller
      * )
      * @param Request $request
      */
-    public function loginUser(Request $request)
+    public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $validator = Validator::make($request->all(),User::VALIDATION_LOGIN_RULES);
 
         if ($validator->fails()) {
             return response()->json([
@@ -388,7 +381,7 @@ class AuthController extends Controller
      * )
      * @param Request $request
      */
-    public function logoutUser(Request $request)
+    public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 

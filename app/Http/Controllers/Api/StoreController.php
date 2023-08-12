@@ -44,7 +44,6 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $code = $e->getCode();
         }
-
         DB::commit();
 
         return response()->json($response, $code);
@@ -70,7 +69,6 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $code = $e->getCode();
         }
-
         DB::commit();
 
         return response()->json($response, $code);
@@ -89,7 +87,7 @@ class StoreController extends Controller implements StoreSwaggerInterface
             DB::beginTransaction();
 
             $this->storeHelper->validateStoreRequest($request);
-
+            
             $response['data'] = $this->storeService->store($request);
         } catch (Exception $e) {
             DB::rollBack();
@@ -98,7 +96,6 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $code = $e->getCode();
         }
-
         DB::commit();
 
         return response()->json($response, $code);
@@ -152,9 +149,8 @@ class StoreController extends Controller implements StoreSwaggerInterface
 
             $code = $e->getCode();
         }
-
         DB::commit();
-
+        
         return response()->json($response, $code);
     }
 }

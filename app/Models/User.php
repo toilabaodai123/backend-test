@@ -20,6 +20,17 @@ class User extends Authenticatable
     const COLUMN_REMEBER_TOKEN = 'remember_token';
     const COLUMN_EMAIL_VERIFIED_AT = 'email_verified_at';
 
+    const VALIDATION_STORE_RULES = [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required',
+    ];  
+    
+    const VALIDATION_LOGIN_RULES = [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
+
 
     /**
      * The attributes that are mass assignable.

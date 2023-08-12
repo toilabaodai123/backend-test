@@ -5,11 +5,13 @@ namespace App\Repositories;
 use App\Contracts\StoreRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Store;
+use App\Models\User;
 
 /**
  * StoreRepository
  */
-class StoreRepository implements StoreRepositoryInterface {    
+class StoreRepository implements StoreRepositoryInterface
+{
     /**
      * searchStore
      *
@@ -21,7 +23,7 @@ class StoreRepository implements StoreRepositoryInterface {
     {
         $limitOfPagination = !empty($request->limit) ? $request->limit : 10;
 
-        $stores = Store::where('user_id', $user_id);
+        $stores = Store::where(Store::COLUMN_USER_ID, $user_id);
 
         if (!empty($request->get(Store::COLUMN_NAME))) {
             $stores->where(Store::COLUMN_NAME, 'like', '%' . $request->get(Store::COLUMN_NAME) . '%');
@@ -44,20 +46,27 @@ class StoreRepository implements StoreRepositoryInterface {
 
     public function findStoreWithStoreIdAndUserId(int $store_id, int $user_id)
     {
-        return Store::where(Store::COLUMN_ID,$store_id)->where(Store::COLUMN_USER_ID,$user_id)->first();
+        return Store::where(Store::COLUMN_ID, $store_id)->where(Store::COLUMN_USER_ID, $user_id)->first();
     }
 
     public function update(int $store_id, array $data)
     {
-        $store = tap(Store::where(Store::COLUMN_ID,$store_id))->update($data);
+        $store = tap(Store::where(Store::COLUMN_ID, $store_id))->update($data);
 
         return $store;
     }
 
     public function delete(int $store_id)
     {
-        $store = Store::where(Store::COLUMN_ID,$store_id)->delete();
-        
+        $store = Store::where(Store::COLUMN_ID, $store_id)->delete();
+
         return $store;
-    }    
+    }
+
+    public function create(array $data)
+    {
+        $store = Store::create($data);
+
+        return $store;
+    }
 }

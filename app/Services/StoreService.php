@@ -60,13 +60,17 @@ class StoreService implements \App\Contracts\StoreServiceInterface
      */
     public function show(int $id, Request $request)
     {
+        $response = null;
+
         $user = $request->user();
 
-        if (empty($store = Store::where('id', $id)->where('user_id', $user->id)->first())) {
+        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute(User::COLUMN_ID)))) {
             throw new Exception(__('store.show.not_found'), 404);
         }
 
-        return $store;
+        $response = $store;
+
+        return $response;
     }
 
     /**
@@ -81,13 +85,15 @@ class StoreService implements \App\Contracts\StoreServiceInterface
 
         $user = $request->user();
 
-        $store = Store::create([
+        $storeData = [
             Store::COLUMN_NAME => $request->get(Store::COLUMN_NAME),
             Store::COLUMN_USER_ID => $user->getAttribute(User::COLUMN_ID),
             Store::COLUMN_DESCRIPTION => $request->get(Store::COLUMN_DESCRIPTION),
             Store::COLUMN_ADDRESS => $request->get(Store::COLUMN_ADDRESS),
             STORE::COLUMN_IS_ONLINE => (bool)$request->get(Store::COLUMN_IS_ONLINE)
-        ]);
+        ];
+        
+        $store = $this->storeRepository->create($storeData);
 
         $response = $store;
 

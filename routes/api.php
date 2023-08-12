@@ -20,19 +20,12 @@ use App\Http\Controllers\Api\ProductController;
 
 Route::name('auth.')->prefix('auth')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/logout', [AuthController::class, 'logoutUser'])->name('logout');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 
     Route::post('/register', [AuthController::class, 'createUser'])->name('register');
-    Route::post('/login', [AuthController::class, 'loginUser'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
-
-
-// Route::name('user.')->prefix('user')->group(function () {
-//     Route::middleware(['auth:sanctum'])->group(function () {
-//         Route::post('/info', [UserController::class, 'showUserInfo'])->name('info');
-//     });
-// });
 
 Route::name('store.')->prefix('store')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {

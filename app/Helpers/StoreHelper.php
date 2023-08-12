@@ -14,7 +14,6 @@ class StoreHelper implements StoreHelperInterface
     public function validateStoreRequest(Request $request)
     {
         $validator = Validator::make($request->all(),Store::VALIDATION_STORE_RULES);
-
         if ($validator->fails()) {
             throw new Exception(__('validation.bad_credential'), 422);
         }

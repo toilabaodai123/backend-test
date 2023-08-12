@@ -24,7 +24,17 @@ class Store extends Model
         self::COLUMN_USER_ID,
         self::COLUMN_IS_ONLINE
     ];
-    
+
+    const VALIDATION_UPDATE_RULES = [
+        self::COLUMN_IS_ONLINE => 'required'
+    ];
+
+    const VALIDATION_STORE_RULES = [
+        self::COLUMN_NAME => 'required',
+        self::COLUMN_ADDRESS => 'required',
+        self::COLUMN_IS_ONLINE => 'required'
+    ];    
+
     /**
      * fillable
      *
@@ -36,8 +46,8 @@ class Store extends Model
         self::COLUMN_ADDRESS,
         self::COLUMN_USER_ID,
         self::COLUMN_IS_ONLINE
-    ];   
-    
+    ];
+
     /**
      * products
      *

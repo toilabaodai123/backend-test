@@ -14,6 +14,11 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     const COLUMN_ID = 'id';
+    const COLUMN_NAME = 'name';
+    const COLUMN_EMAIL = 'email';
+    const COLUMN_PASSWORD = 'password';
+    const COLUMN_REMEBER_TOKEN = 'remember_token';
+    const COLUMN_EMAIL_VERIFIED_AT = 'email_verified_at';
 
 
     /**
@@ -22,9 +27,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        self::COLUMN_NAME,
+        self::COLUMN_EMAIL,
+        self::COLUMN_PASSWORD,
     ];
 
     /**
@@ -33,8 +38,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        self::COLUMN_PASSWORD,
+        self::COLUMN_REMEBER_TOKEN
     ];
 
     /**
@@ -43,7 +48,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        self::COLUMN_EMAIL_VERIFIED_AT => 'datetime',
+        self::COLUMN_PASSWORD => 'hashed',
     ];
 }

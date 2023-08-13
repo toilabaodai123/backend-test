@@ -36,17 +36,11 @@ class AuthController extends Controller implements AuthSwaggerInterface
         $code = 200;
         
         try {
-            DB::beginTransaction();
-
             $this->authHelper->validateLoginRequest($request);
-
-            $response['data']['token'] = $this->authService->login($request);
             
-            DB::commit();
+            $response['data']['token'] = $this->authService->login($request);
         } catch (Exception $e) {
-            DB::rollBack();
-
-            $response['message'] = $e->getMessage();
+            $response['message'] = $e->getTrace();
 
             $code = $this->checkErrorCode($e->getCode());
         }

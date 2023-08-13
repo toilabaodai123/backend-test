@@ -28,22 +28,22 @@ class StoreRepository extends BaseRepository implements StoreRepositoryInterface
     {
         $limitOfPagination = !empty($request->limit) ? $request->limit : 10;
 
-        $stores = Store::where(Store::COLUMN_USER_ID, $user_id);
+        $stores = Store::where('user_id', $user_id);
 
-        if (!empty($request->get(Store::COLUMN_NAME))) {
-            $stores->where(Store::COLUMN_NAME, 'like', '%' . $request->get(Store::COLUMN_NAME) . '%');
+        if (!empty($request->get('name'))) {
+            $stores->where('name', 'like', '%' . $request->get('name') . '%');
         }
 
-        if (!empty($request->get(Store::COLUMN_DESCRIPTION))) {
-            $stores->where(Store::COLUMN_DESCRIPTION, 'like', '%' . $request->get(Store::COLUMN_DESCRIPTION) . '%');
+        if (!empty($request->get('description'))) {
+            $stores->where('description', 'like', '%' . $request->get('description') . '%');
         }
 
-        if (!empty($request->get(Store::COLUMN_ADDRESS))) {
-            $stores->where(Store::COLUMN_ADDRESS, 'like', '%' . $request->get(Store::COLUMN_ADDRESS) . '%');
+        if (!empty($request->get('address'))) {
+            $stores->where('address', 'like', '%' . $request->get('address') . '%');
         }
 
-        if (!empty($request->get(Store::COLUMN_IS_ONLINE))) {
-            $stores->where(Store::COLUMN_IS_ONLINE, $request->get(Store::COLUMN_IS_ONLINE) == "true" ? 1 : 0);
+        if (!empty($request->get('is_online'))) {
+            $stores->where('is_online', $request->get('is_online') == "true" ? 1 : 0);
         }
 
         return $stores->paginate($limitOfPagination);
@@ -51,6 +51,6 @@ class StoreRepository extends BaseRepository implements StoreRepositoryInterface
 
     public function findStoreWithStoreIdAndUserId(int $store_id, int $user_id)
     {
-        return Store::where(Store::COLUMN_ID, $store_id)->where(Store::COLUMN_USER_ID, $user_id)->first();
+        return Store::where('id', $store_id)->where('user_id', $user_id)->first();
     }
 }

@@ -10,29 +10,22 @@ class Store extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const COLUMN_ID = 'id';
-    const COLUMN_NAME = 'name';
-    const COLUMN_DESCRIPTION = 'description';
-    const COLUMN_ADDRESS = 'address';
-    const COLUMN_USER_ID = 'user_id';
-    const COLUMN_IS_ONLINE = 'is_online';
-
     const COLUMN_ARRAY = [
-        self::COLUMN_NAME,
-        self::COLUMN_DESCRIPTION,
-        self::COLUMN_ADDRESS,
-        self::COLUMN_USER_ID,
-        self::COLUMN_IS_ONLINE
+        'name',
+        'description',
+        'address',
+        'user_id',
+        'is_online'
     ];
 
     const VALIDATION_UPDATE_RULES = [
-        self::COLUMN_IS_ONLINE => 'required'
+        'is_online' => 'required'
     ];
 
     const VALIDATION_STORE_RULES = [
-        self::COLUMN_NAME => 'required',
-        self::COLUMN_ADDRESS => 'required',
-        self::COLUMN_IS_ONLINE => 'required'
+        'name' => 'required',
+        'address' => 'required',
+        'is_online' => 'required'
     ];    
 
     /**
@@ -41,11 +34,11 @@ class Store extends Model
      * @var array
      */
     protected $fillable = [
-        self::COLUMN_NAME,
-        self::COLUMN_DESCRIPTION,
-        self::COLUMN_ADDRESS,
-        self::COLUMN_USER_ID,
-        self::COLUMN_IS_ONLINE
+        'name',
+        'description',
+        'address',
+        'user_id',
+        'is_online'
     ];
 
     /**

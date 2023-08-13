@@ -86,11 +86,11 @@ class StoreService implements \App\Contracts\StoreServiceInterface
         $user = $request->user();
 
         $storeData = [
-            Store::COLUMN_NAME => $request->get(Store::COLUMN_NAME),
-            Store::COLUMN_USER_ID => $user->getAttribute(User::COLUMN_ID),
-            Store::COLUMN_DESCRIPTION => $request->get(Store::COLUMN_DESCRIPTION),
-            Store::COLUMN_ADDRESS => $request->get(Store::COLUMN_ADDRESS),
-            STORE::COLUMN_IS_ONLINE => (bool)$request->get(Store::COLUMN_IS_ONLINE)
+            'name' => $request->get('name'),
+            'user_id' => $user->getAttribute('id'),
+            'description' => $request->get('description'),
+            'address' => $request->get('address'),
+            'is_online' => (bool)$request->get('is_online')
         ];
 
         $store = $this->storeRepository->create($storeData);
@@ -118,13 +118,13 @@ class StoreService implements \App\Contracts\StoreServiceInterface
         }
 
         $updateData = [
-            Store::COLUMN_NAME => $request->get(Store::COLUMN_NAME) ?? $store->getAttribute(STORE::COLUMN_ID),
-            Store::COLUMN_DESCRIPTION => $request->get(Store::COLUMN_DESCRIPTION) ?? $store->getAttribute(Store::COLUMN_DESCRIPTION),
-            STORE::COLUMN_ADDRESS => $request->get(Store::COLUMN_ADDRESS) ?? $store->getAttribute(Store::COLUMN_ADDRESS),
-            STORE::COLUMN_IS_ONLINE => (bool)$request->get(Store::COLUMN_IS_ONLINE)
+            'name' => $request->get('name') ?? $store->getAttribute('name'),
+            'description' => $request->get('description') ?? $store->getAttribute('description'),
+            'address' => $request->get('address') ?? $store->getAttribute('address'),
+            'is_online' => (bool)$request->get('is_online')
         ];
 
-        $store = $this->storeRepository->update($store->getAttribute(Store::COLUMN_ID), $updateData);
+        $store = $this->storeRepository->update($store->getAttribute('id'), $updateData);
 
         $response = $store;
 

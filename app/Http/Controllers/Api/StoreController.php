@@ -36,14 +36,8 @@ class StoreController extends Controller implements StoreSwaggerInterface
         $code = 200;
 
         try {
-            DB::beginTransaction();
-
             $response['data'] = $this->storeService->index($request);
-
-            DB::commit();
         } catch (Exception $e) {
-            DB::rollBack();
-
             $response['message'] = $e->getMessage();
 
             $code = $this->checkErrorCode($e->getCode());
@@ -88,9 +82,9 @@ class StoreController extends Controller implements StoreSwaggerInterface
         $code = 200;
 
         try {
-            DB::beginTransaction();
-
             $this->storeHelper->validateStoreRequest($request);
+
+            DB::beginTransaction();
 
             $response['data'] = $this->storeService->store($request);
 
@@ -116,9 +110,9 @@ class StoreController extends Controller implements StoreSwaggerInterface
         $code = 200;
 
         try {
-            DB::beginTransaction();
-
             $this->storeHelper->validateUpdateRequest($request);
+
+            DB::beginTransaction();
 
             $response['data'] = $this->storeService->update($store_id, $request);
 

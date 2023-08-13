@@ -519,7 +519,7 @@ interface ProductSwaggerInterface
      *                     ),
      *                     @OA\Property(
      *                         property="data",
-     *                         example={}
+     *                         ref="#/components/schemas/ProductSchema"
      *                     )
      *                 )
      *             )

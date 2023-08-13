@@ -736,7 +736,7 @@
                                             "example": "Success"
                                         },
                                         "data": {
-                                            "example": []
+                                            "$ref": "#/components/schemas/ProductSchema"
                                         }
                                     },
                                     "type": "object"
@@ -1299,7 +1299,7 @@
                                             "example": "Success"
                                         },
                                         "data": {
-                                            "example": []
+                                            "$ref": "#/components/schemas/StoreSchema"
                                         }
                                     },
                                     "type": "object"

@@ -112,7 +112,9 @@ class ProductService implements ProductServiceInterface
             throw new Exception(__('product.delete.not_found'),404);
         }
 
-        $this->productRepository->delete($id);
+        $product = $this->productRepository->delete($id);
+
+        $response = $product;
 
         return $response;
     }

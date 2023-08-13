@@ -1,7 +1,7 @@
 version: '3.0'
 services:
   app:
-    build: .
+    image: daipham99/linux-nginx:latest
     container_name: app
     ports:
       - 80:80

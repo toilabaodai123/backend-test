@@ -501,7 +501,7 @@ interface StoreSwaggerInterface
      *                     ),
      *                     @OA\Property(
      *                         property="data",
-     *                         example={}
+     *                         ref="#/components/schemas/StoreSchema"
      *                     )
      *                 )
      *             )

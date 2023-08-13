@@ -60,9 +60,11 @@ class BaseRepository
      */
     public function update(int $id, array $data)
     {
-        $model = tap($this->model->where('id', $id))->update($data);
+        $model = $this->model->find($id);
 
-        return $model;
+        $model->update($data);
+
+        return $model->fresh();
     }
     
     /**

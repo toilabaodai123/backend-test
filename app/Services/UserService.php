@@ -33,4 +33,9 @@ class UserService implements UserServiceInterface
 
         return $response;
     }
+
+    public function show(int $id,Request $request){}
+    public function index(Request $request){}
+    public function update(int $id,Request $request){}
+    public function delete(int $id,Request $request){}  
 }

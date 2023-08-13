@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Contracts\BaseRepositoryInterface;
 use App\Contracts\UserRepositoryInterface;
 use App\Models\User;
 

@@ -73,8 +73,6 @@ class BaseRepository
      */
     public function delete(int $id)
     {
-        return $this->model->where('id', $id)->delete($id);
-
         $model = $this->model->find($id);
 
         $modelClone = $model->replicate();

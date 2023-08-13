@@ -8,154 +8,142 @@ use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Support\Facades\Validator;
 use App\Contracts\ProductSwaggerInterface;
+use App\Contracts\ProductServiceInterface;
+use App\Contracts\ProductHelperInterface;
 use App\Traits\CheckErrorCode;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ProductController extends Controller implements ProductSwaggerInterface
 {
     use CheckErrorCode;
-    
+
+    private $productService;
+    private $productHelper;
+
+    public function __construct(ProductServiceInterface $productService, ProductHelperInterface $productHelper)
+    {
+        $this->productService = $productService;
+        $this->productHelper = $productHelper;
+    }
+
     public function index(Request $request)
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('product.show.success'),
+            'data' => [],
+        ];
 
-        $limitOfPagination = !empty($request->limit) ? $request->limit : 10;
+        $code = 200;
 
-        $stores = Store::where('user_id', $user->id);
+        try {
+            $response['data'] = $this->productService->index($request);
+        } catch (Exception $e) {
+            $response['message'] = $e->getMessage();
 
-        if (!empty($request->store_id)) {
-            $stores->where('id', $request->store_id);
+            $code = $this->checkErrorCode($e->getCode());
         }
 
-        $stores = $stores->get()->pluck('id')->toArray();
-
-        $products = Product::whereIn('store_id', $stores);
-
-        if (!empty($request->name)) {
-            $products->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if (!empty($request->description)) {
-            $products->where('description', 'like', '%' . $request->description . '%');
-        }
-
-        if (!empty($request->stock)) {
-            $products->where('stock', $request->stock);
-        }
-
-        if (!empty($request->price)) {
-            $products->where('price', $request->price);
-        }
-
-        $products = $products->paginate($limitOfPagination);
-
-        return response()->json([
-            'message' => "",
-            'data' => [
-                'data' => $products
-            ]
-        ], 200);
+        return response()->json($response, $code);
     }
 
     public function show(int $id, Request $request)
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('product.show.success'),
+            'data' => [],
+        ];
 
-        $product = Product::find($id);
+        $code = 200;
 
-        if (empty($product) || $product->store->user_id != $user->id) {
-            return response()->json([
-                'message' => __('product.show.not_found'),
-                'data' => []
-            ], 404);
+        try {
+            $response['data'] = $this->productService->show($id, $request);
+        } catch (Exception $e) {
+            $response['message'] = $e->getMessage();
+
+            $code = $this->checkErrorCode($e->getCode());
         }
 
-        return response()->json([
-            'message' => __('product.show.success'),
-            'data' => $product
-        ], 200);
+        return response()->json($response, $code);
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'description' => 'required',
-            'stock' => 'required|integer',
-            'price' => 'required|integer',
-            'store_id' => 'required|exists:stores,id'
-        ]);
+        $response = [
+            'message' => __('product.create.success'),
+            'data' => [],
+        ];
 
-        $user = $request->user();
+        $code = 200;
 
-        if ($validator->fails() || Store::find($request->store_id)->user_id != $user->id) {
-            return response()->json([
-                'message' => __('validation.bad_credential'),
-                'data' => [
-                    'error' => $validator->errors(),
-                ]
-            ], 422);
+        try {
+            $this->productHelper->validateStoreRequest($request);
+
+            DB::beginTransaction();
+
+            $response['data'] = $this->productService->store($request);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $this->checkErrorCode($e->getCode());
         }
 
-        $product = Product::create([
-            'name' => $request->name,
-            'store_id' => $request->store_id,
-            'description' => $request->description,
-            'stock' => $request->stock,
-            'price' => $request->price
-        ]);
-
-        return response()->json([
-            'message' => __('product.create.success'),
-            'data' => [
-                'store' => $product
-            ]
-        ], 200);
+        return response()->json($response, $code);
     }
 
     public function update(int $id, Request $request)
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('product.update.success'),
+            'data' => [],
+        ];
 
-        $product = Product::find($id);
+        $code = 200;
 
-        if (empty($product) || $product->store->user_id != $user->id) {
-            return response()->json([
-                'message' => __('product.update.not_found'),
-                'data' => []
-            ], 404);
+        try {
+            DB::beginTransaction();
+
+            $response['data'] = $this->productService->update($id,$request);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $this->checkErrorCode($e->getCode());
         }
 
-        $product->update([
-            'name' => $request->name ? $request->name : $product->name,
-            'description' => $request->description ? $request->description : $product->description,
-            'stock' => $request->stock ? (int)$request->stock : $product->stock,
-            'price' => $request->price ? (int)$request->price : $product->price,
-        ]);
-
-        return response()->json([
-            'message' => __('product.update.success'),
-            'data' => $product
-        ], 200);
+        return response()->json($response, $code);
     }
 
     public function delete(int $id, Request $request)
     {
-        $user = $request->user();
+        $response = [
+            'message' => __('product.delete.success'),
+            'data' => [],
+        ];
 
-        $product = Product::find($id);
+        $code = 200;
 
-        if (empty($product) || $product->store->user_id != $user->id) {
-            return response()->json([
-                'message' => __('product.delete.not_found'),
-                'data' => []
-            ], 404);
+        try {
+            DB::beginTransaction();
+
+            $response['data'] = $this->productService->delete($id,$request);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $response['message'] = $e->getMessage();
+
+            $code = $this->checkErrorCode($e->getCode());
         }
 
-        $product->delete();
-
-        return response()->json([
-            'message' => __('product.delete.success'),
-            'data' => $product
-        ], 200);
+        return response()->json($response, $code);
     }
 }

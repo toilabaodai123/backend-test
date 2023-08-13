@@ -4,8 +4,7 @@ namespace App\Contracts;
 
 use Illuminate\Http\Request;
 
-interface UserRepositoryInterface
+interface UserRepositoryInterface extends BaseRepositoryInterface
 {
     public function findWithEmail(string $email);
-    public function create(array $data);
 }

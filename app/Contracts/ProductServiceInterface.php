@@ -4,6 +4,6 @@ namespace App\Contracts;
 
 use Illuminate\Http\Request;
 
-interface StoreServiceInterface extends BaseServiceInterface{
+interface ProductServiceInterface extends BaseServiceInterface{
     
 }

@@ -64,7 +64,7 @@ class StoreService implements \App\Contracts\StoreServiceInterface
 
         $user = $request->user();
 
-        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute(User::COLUMN_ID)))) {
+        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute('id')))) {
             throw new Exception(__('store.show.not_found'), 404);
         }
 
@@ -113,7 +113,7 @@ class StoreService implements \App\Contracts\StoreServiceInterface
 
         $user = $request->user();
 
-        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute(User::COLUMN_ID)))) {
+        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute('id')))) {
             throw new Exception(__('store.update.not_found'), 404);
         }
 
@@ -144,7 +144,7 @@ class StoreService implements \App\Contracts\StoreServiceInterface
 
         $user = $request->user();
 
-        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute(User::COLUMN_ID)))) {
+        if (empty($store = $this->storeRepository->findStoreWithStoreIdAndUserId($id, $user->getAttribute('id')))) {
             throw new Exception(__('store.delete.not_found'), 404);
         }
 

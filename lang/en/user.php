@@ -2,6 +2,6 @@
 
 return [
     'create' => [
-        'success' => 'Account created successfully',
+        'success' => 'Create account successfully',
     ],
 ];

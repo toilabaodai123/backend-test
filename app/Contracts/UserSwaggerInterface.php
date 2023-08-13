@@ -3,14 +3,13 @@
 namespace App\Contracts;
 
 use Illuminate\Http\Request;
-
 interface UserSwaggerInterface
 {
     /**
      * Register User
      * 
      * @OA\Post(
-     *      path="/api/user/register",
+     *      path="/api/user",
      *      tags={"User"},
      *      @OA\Parameter(
      *          name="lang",

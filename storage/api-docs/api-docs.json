@@ -1355,13 +1355,13 @@
                 ]
             }
         },
-        "/api/user/register": {
+        "/api/user": {
             "post": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Register User",
-                "operationId": "c20a9a0f111be29aafd3e9ed45f80a45",
+                "operationId": "891bd57c940a9263923b175c5bbbbc3a",
                 "parameters": [
                     {
                         "name": "lang",

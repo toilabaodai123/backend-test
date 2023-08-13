@@ -14,7 +14,7 @@ class AuthHelper implements AuthHelperInterface
     {
         $validator = Validator::make($request->all(),User::VALIDATION_LOGIN_RULES);
         if ($validator->fails()) {
-            throw new Exception(__('validation.bad_credential'), 422);
+            throw new Exception($validator->messages()->first(), 422);
         }
     }
 }

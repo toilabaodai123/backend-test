@@ -33,16 +33,16 @@ class UserController extends Controller implements UserSwaggerInterface
         $code = 200;
 
         try {
-            DB::beginTransaction();
 
             $this->userHelper->validateStoreRequest($request);
+
+            DB::beginTransaction();
 
             $response['data']['token'] = $this->userService->store($request);
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-
             $response['message'] = $e->getMessage();
 
             $code = $this->checkErrorCode($e->getCode());

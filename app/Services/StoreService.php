@@ -8,7 +8,6 @@ use App\Models\Store;
 use App\Models\User;
 use Exception;
 use App\Contracts\StoreRepositoryInterface;
-use App\Http\Requests\StoreStoreRequest;
 
 /**
  * StoreService

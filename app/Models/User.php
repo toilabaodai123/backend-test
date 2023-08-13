@@ -24,7 +24,7 @@ class User extends Authenticatable
         'name' => 'required',
         'email' => 'required|email|unique:users,email',
         'password' => 'required',
-    ];  
+    ];     
     
     const VALIDATION_LOGIN_RULES = [
         'email' => 'required|email',

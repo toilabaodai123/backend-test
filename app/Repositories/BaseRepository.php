@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 class BaseRepository
 {
-    private $model;
+    protected $model;
     
     /**
      * setModel

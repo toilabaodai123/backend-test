@@ -10,7 +10,7 @@ use App\Repositories\UserRepository;
 use App\Services\UserService;
 use App\Helpers\UserHelper;
 
-class UserProvider extends ServiceProvider
+class UserServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

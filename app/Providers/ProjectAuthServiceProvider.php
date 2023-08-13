@@ -9,7 +9,7 @@ use App\Contracts\AuthServiceInterface;
 use App\Services\AuthService;
 use App\Helpers\AuthHelper;
 
-class AuthProvider extends ServiceProvider
+class ProjectAuthServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

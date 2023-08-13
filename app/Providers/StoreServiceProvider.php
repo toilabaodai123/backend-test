@@ -13,7 +13,7 @@ use App\Repositories\StoreRepository;
 /**
  * StoreProvider
  */
-class StoreProvider extends ServiceProvider
+class StoreServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

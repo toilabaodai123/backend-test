@@ -7,8 +7,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Exception;
+use App\Contracts\UserRepositoryInterface;
 
 class AuthService implements AuthServiceInterface{
+
+    /**
+     * @var undefined
+     */
+    private $userRepository;
+
+    /**
+     * @param UserRepositoryInterface $userRepository
+     */
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
     public function login(Request $request)
     {
         $response = null;
@@ -17,13 +37,18 @@ class AuthService implements AuthServiceInterface{
             throw new Exception(__('auth.wrong_credential'),401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = $this->userRepository->findWithEmail($request->email);
 
         $response = $user->createToken("API TOKEN")->plainTextToken;
 
         return $response;
     }
 
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
     public function logout(Request $request)
     {
         $response = null;

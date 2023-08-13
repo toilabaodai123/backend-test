@@ -10,8 +10,13 @@ use App\Models\User;
 /**
  * StoreRepository
  */
-class StoreRepository implements StoreRepositoryInterface
+class StoreRepository extends BaseRepository implements StoreRepositoryInterface
 {
+    public function __construct(Store $store)
+    {
+        $this->setModel($store);
+    }
+
     /**
      * searchStore
      *
@@ -47,26 +52,5 @@ class StoreRepository implements StoreRepositoryInterface
     public function findStoreWithStoreIdAndUserId(int $store_id, int $user_id)
     {
         return Store::where(Store::COLUMN_ID, $store_id)->where(Store::COLUMN_USER_ID, $user_id)->first();
-    }
-
-    public function update(int $store_id, array $data)
-    {
-        $store = tap(Store::where(Store::COLUMN_ID, $store_id))->update($data);
-
-        return $store;
-    }
-
-    public function delete(int $store_id)
-    {
-        $store = Store::where(Store::COLUMN_ID, $store_id)->delete();
-
-        return $store;
-    }
-
-    public function create(array $data)
-    {
-        $store = Store::create($data);
-        
-        return $store;
     }
 }

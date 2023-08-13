@@ -119,9 +119,9 @@ class StoreService implements \App\Contracts\StoreServiceInterface
         }
 
         $updateData = [
-            Store::COLUMN_NAME => $request->get(Store::COLUMN_NAME) ? $request->get(Store::COLUMN_NAME) : $store->getAttribute(STORE::COLUMN_ID),
-            Store::COLUMN_DESCRIPTION => $request->get(Store::COLUMN_DESCRIPTION) ? $request->get(Store::COLUMN_DESCRIPTION) : $store->getAttribute(Store::COLUMN_DESCRIPTION),
-            STORE::COLUMN_ADDRESS => $request->get(Store::COLUMN_ADDRESS) ? $request->get(Store::COLUMN_ADDRESS) : $store->getAttribute(Store::COLUMN_ADDRESS),
+            Store::COLUMN_NAME => $request->get(Store::COLUMN_NAME) ?? $store->getAttribute(STORE::COLUMN_ID),
+            Store::COLUMN_DESCRIPTION => $request->get(Store::COLUMN_DESCRIPTION) ?? $store->getAttribute(Store::COLUMN_DESCRIPTION),
+            STORE::COLUMN_ADDRESS => $request->get(Store::COLUMN_ADDRESS) ?? $store->getAttribute(Store::COLUMN_ADDRESS),
             STORE::COLUMN_IS_ONLINE => (bool)$request->get(Store::COLUMN_IS_ONLINE)
         ];
 

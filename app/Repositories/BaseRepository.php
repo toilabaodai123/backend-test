@@ -79,6 +79,8 @@ class BaseRepository
 
         $model->delete();
 
+        $modelClone->deleted_at = \Carbon\Carbon::now();
+
         return $modelClone;
     }
 }

@@ -10,8 +10,11 @@
 - Using Swagger for RESTAPIs documentation   
 - Implemented Dependancy Inversion  
 - Added some feature testing cases. 
-## Live server for testing
+## Live server for testing  
 
+- IP: http://175.41.175.209/api/documentation  
+- Account: guess@yahoo.com/password  
+- Record:  [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/oIWxIG5UTJs/0.jpg)](https://www.youtube.com/watch?v=oIWxIG5UTJs)
 
 ## Some charts about this project
 - ERD  
@@ -20,11 +23,7 @@
 - Flow of request to this project on AWS  
 ![alt text](./etc/aws.drawio.png)  
 
-# Project setup on local tutorial
-- IP: http://175.41.175.209/api/documentation  
-- Account: guess@yahoo.com/password
-- Record:  [![IMAGE ALT TEXT HERE](https://img.youtube.com/watch?v=oIWxIG5UTJs/0.jpg)](https://www.youtube.com/watch?v=oIWxIG5UTJs) 
-
+# Project setup on local tutorial  
 ## Prerequisite  
 - Docker should be already installed on your machine.  
 

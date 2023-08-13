@@ -4,7 +4,7 @@ services:
     image: daipham99/linux-nginx:latest
     container_name: app
     ports:
-      - 80:80
+      - 6001:80
       - 443:443
     volumes:
       - .:/app
@@ -15,7 +15,7 @@ services:
     image: mysql:8.0.32
     container_name: mysql
     ports:
-      - 3306:3306
+      - 6002:3306
     environment:
       - MYSQL_ROOT_PASSWORD=&sK@rI018r37
       - MYSQL_DATABASE=backend
@@ -27,7 +27,7 @@ services:
     image: phpmyadmin:5.2.1
     restart: always
     ports:
-      - 8080:80
+      - 6003:80
     environment:
       - PMA_ARBITRARY=1
     depends_on:

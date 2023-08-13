@@ -45,3 +45,8 @@
     - ``php artisan test`` to run the all feature testing  
     - ``php artisan db:seed`` to create some dummy data in the database  
 
+- You can now access to the containers  
+    - Web application: localhost:6001  
+    - Mysql: localhost:6002  
+    - Phpmyadmin: localhost:6003    
+

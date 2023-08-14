@@ -7,14 +7,15 @@
 - Validating requests  
 - Error Handling, added ``CheckErrorCode`` trait to support this  
 - Using Laravel Localization for multi languages response messages, added ``SetAppLocale`` middleware to support this  
-- Using Swagger for RESTAPIs documentation   
-- Implemented Dependancy Inversion  
+- Using Swagger for RESTAPIs documentation, all the structures are located at ``./app/Contracts/(*)SwaggerInterface.php``
+- Using Dependency Inversion principle 
 - Added some feature testing cases. 
 ## Live server for testing  
 
 - IP: http://175.41.175.209/api/documentation  
 - Account: guess@yahoo.com/password  
-- Record:  [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/oIWxIG5UTJs/0.jpg)](https://www.youtube.com/watch?v=oIWxIG5UTJs)
+- Record:  
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/oIWxIG5UTJs/0.jpg)](https://www.youtube.com/watch?v=oIWxIG5UTJs)
 
 ## Some charts about this project
 - ERD  
@@ -42,11 +43,11 @@
     php artisan config:clear
 ```  
 - Below are some not required commands(make sure your work directory is still the same with the web application's from above) 
-    - ``php artisan test`` to run the all feature testing  
+    - ``php artisan test`` to run all the feature testing  
     - ``php artisan db:seed`` to create some dummy data in the database  
 
 - You can now access to the containers  
-    - Web application: localhost:6001  
+    - Web application: localhost:6001, Swagger API Documentation: localhost:6001/api/documentation
     - Mysql: localhost:6002  
     - Phpmyadmin: localhost:6003    
 
